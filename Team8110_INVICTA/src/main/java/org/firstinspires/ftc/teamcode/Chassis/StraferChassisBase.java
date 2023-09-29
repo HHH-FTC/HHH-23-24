@@ -109,8 +109,8 @@ public class StraferChassisBase extends com.acmerobotics.roadrunner.drive.Mecanu
             setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, MOTOR_VELO_PID);
         }
 
-        frontRight.setDirectionReverse();
-        backLeft.setDirectionReverse();
+        frontLeft.setDirectionReverse();
+        backRight.setDirectionReverse();
 
         // TODO: if desired, use setLocalizer() to change the localization method
         // for instance, setLocalizer(new ThreeTrackingWheelLocalizer(...));

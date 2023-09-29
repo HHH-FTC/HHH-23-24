@@ -13,8 +13,10 @@ public class TestBaseBot extends LinearOpMode {
     public void runOpMode() {
         StraferChassisBase base = new StraferChassisBase(hardwareMap);
 
+        waitForStart();
+
         while (opModeIsActive()) {
-            Pose2d loc = new Pose2d(gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+            Pose2d loc = new Pose2d(gamepad1.left_stick_y, -gamepad1.right_stick_x, -gamepad1.left_stick_x);
             base.setDrivePower(loc);
 
             telemetry.addData("Positions:", loc);
