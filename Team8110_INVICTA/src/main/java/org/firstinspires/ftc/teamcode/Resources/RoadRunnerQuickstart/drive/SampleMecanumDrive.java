@@ -148,6 +148,10 @@ public class SampleMecanumDrive extends MecanumDrive {
         trajectorySequenceRunner = new TrajectorySequenceRunner(follower, HEADING_PID);
     }
 
+//    public SampleMecanumDrive(double kV, double kA, double kStatic, double trackWidth, double trackWidth1, double lateralMultiplier) {
+//        super();
+//    }
+
     public TrajectoryBuilder trajectoryBuilder(Pose2d startPose) {
         return new TrajectoryBuilder(startPose, VEL_CONSTRAINT, ACCEL_CONSTRAINT);
     }

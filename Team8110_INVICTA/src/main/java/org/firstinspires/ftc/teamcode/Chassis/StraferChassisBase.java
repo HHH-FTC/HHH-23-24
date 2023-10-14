@@ -34,6 +34,7 @@ import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigu
 
 import org.firstinspires.ftc.teamcode.Hardware.DriveConstants;
 import org.firstinspires.ftc.teamcode.Hardware.Mechanisms.Motor;
+import org.firstinspires.ftc.teamcode.Resources.RoadRunnerQuickstart.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.Resources.RoadRunnerQuickstart.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.Resources.RoadRunnerQuickstart.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.Resources.RoadRunnerQuickstart.trajectorysequence.TrajectorySequenceRunner;
@@ -44,7 +45,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Config
-public class StraferChassisBase extends com.acmerobotics.roadrunner.drive.MecanumDrive {
+public class StraferChassisBase extends SampleMecanumDrive {
     //Declare the variables for the mecanum drive train class
     /* Although the encoders aren't DcMotors, they can be initialized as one
     since they are connected to the drive train motor encoder ports on the rev hub.
@@ -77,7 +78,7 @@ public class StraferChassisBase extends com.acmerobotics.roadrunner.drive.Mecanu
 
     public StraferChassisBase(HardwareMap hardwareMap) {
 
-        super(DriveConstants.kV, DriveConstants.kA, DriveConstants.kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
+        super(hardwareMap);
 
 //        follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5.0));
@@ -122,7 +123,8 @@ public class StraferChassisBase extends com.acmerobotics.roadrunner.drive.Mecanu
 
     public StraferChassisBase(String flName, String frName, String brName, String blName, HardwareMap hardwareMap) {
 
-        super(DriveConstants.kV, DriveConstants.kA, DriveConstants.kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
+        super(hardwareMap);
+
 
         //InertialMeasurementUnit = new InertialMeasurementUnit(hardwareMap);
         follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
@@ -379,16 +381,18 @@ public class StraferChassisBase extends com.acmerobotics.roadrunner.drive.Mecanu
         this.backLeft.setBreakMode();
     }
 
+//    public void setMode(DcMotor.RunMode runMode){
+//        this.frontLeft.setMode(runMode);
+//        this.frontRight.setMode(runMode);
+//        this.backRight.setMode(runMode);
+//        this.backLeft.setMode(runMode);
+//    }
+
     public void setFloatMode(){
         this.frontLeft.setFloatMode();
         this.frontRight.setFloatMode();
         this.backRight.setFloatMode();
         this.backLeft.setFloatMode();
-    }
-
-    @Override
-    protected double getRawExternalHeading() {
-        return 0.0;
     }
 
     public List<Motor> getWheels() {
