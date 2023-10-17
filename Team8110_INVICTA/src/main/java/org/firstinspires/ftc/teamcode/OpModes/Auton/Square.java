@@ -5,7 +5,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Chassis.StraferChassisBase;
+import org.firstinspires.ftc.teamcode.Hardware.Chassis.StraferChassisBase;
 
 @Autonomous
 public class Square extends LinearOpMode {
@@ -15,8 +15,13 @@ public class Square extends LinearOpMode {
         StraferChassisBase base;
         base = new StraferChassisBase(hardwareMap);
 
+        Pose2d initPose = base.getPoseEstimate();
+
+        telemetry.addData("Start Pose", initPose);
+        telemetry.update();
+
         //trajectory
-        Trajectory mySquare = base.trajectoryBuilder(new Pose2d())
+        Trajectory mySquare = base.trajectoryBuilder(initPose)
                 .forward(20)
                 .build();
 

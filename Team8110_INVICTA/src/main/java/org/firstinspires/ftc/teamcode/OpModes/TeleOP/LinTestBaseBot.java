@@ -1,26 +1,23 @@
 package org.firstinspires.ftc.teamcode.OpModes.TeleOP;
 
-import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Chassis.StraferChassisBase;
+import org.firstinspires.ftc.teamcode.Hardware.BertramNerddren;
+import org.firstinspires.ftc.teamcode.Hardware.Chassis.StraferChassisBase;
 
 @TeleOp
 public class LinTestBaseBot extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        StraferChassisBase base = new StraferChassisBase(hardwareMap);
+        BertramNerddren base = new BertramNerddren(hardwareMap);
 
         waitForStart();
 
         while (opModeIsActive()) {
-            Pose2d loc = new Pose2d(gamepad1.left_stick_y, -gamepad1.right_stick_x, -gamepad1.left_stick_x);
-            base.setDrivePower(loc);
-
-            telemetry.addData("Positions:", loc);
+            telemetry.addData("Positions:", base.teleOpDrive());
             telemetry.update();
         }
     }

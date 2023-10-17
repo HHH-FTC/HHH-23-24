@@ -1,16 +1,16 @@
 package org.firstinspires.ftc.teamcode.Resources.RoadRunnerQuickstart.drive;
 
-import static org.firstinspires.ftc.teamcode.Hardware.DriveConstants.MAX_ACCEL;
-import static org.firstinspires.ftc.teamcode.Hardware.DriveConstants.MAX_ANG_ACCEL;
-import static org.firstinspires.ftc.teamcode.Hardware.DriveConstants.MAX_ANG_VEL;
-import static org.firstinspires.ftc.teamcode.Hardware.DriveConstants.MAX_VEL;
-import static org.firstinspires.ftc.teamcode.Hardware.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.teamcode.Hardware.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.teamcode.Hardware.DriveConstants.TRACK_WIDTH;
-import static org.firstinspires.ftc.teamcode.Hardware.DriveConstants.encoderTicksToInches;
-import static org.firstinspires.ftc.teamcode.Hardware.DriveConstants.kA;
-import static org.firstinspires.ftc.teamcode.Hardware.DriveConstants.kStatic;
-import static org.firstinspires.ftc.teamcode.Hardware.DriveConstants.kV;
+import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.MAX_ACCEL;
+import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.MAX_ANG_ACCEL;
+import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.MAX_ANG_VEL;
+import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.MAX_VEL;
+import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.TRACK_WIDTH;
+import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.encoderTicksToInches;
+import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.kA;
+import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.kStatic;
+import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.kV;
 
 import androidx.annotation.NonNull;
 
@@ -38,7 +38,7 @@ import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
-import org.firstinspires.ftc.teamcode.Hardware.InertialMeasurementUnit;
+import org.firstinspires.ftc.teamcode.Hardware.Mechanisms.InertialMeasurementUnit;
 import org.firstinspires.ftc.teamcode.Resources.RoadRunnerQuickstart.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.Resources.RoadRunnerQuickstart.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.Resources.RoadRunnerQuickstart.trajectorysequence.TrajectorySequenceRunner;
