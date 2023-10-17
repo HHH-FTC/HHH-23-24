@@ -1,11 +1,9 @@
 package org.firstinspires.ftc.teamcode.OpModes.TeleOP;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.Hardware.BertramNerddren;
-import org.firstinspires.ftc.teamcode.Hardware.Chassis.StraferChassisBase;
+import org.firstinspires.ftc.teamcode.Hardware.Robots.BertramNerddren;
 
 @TeleOp
 public class LinTestBaseBot extends LinearOpMode {

@@ -5,7 +5,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.Hardware.Chassis.StraferChassisBase;
+import org.firstinspires.ftc.teamcode.Hardware.Drivetrains.StraferChassisBase;
 
 @Autonomous
 public class Square extends LinearOpMode {

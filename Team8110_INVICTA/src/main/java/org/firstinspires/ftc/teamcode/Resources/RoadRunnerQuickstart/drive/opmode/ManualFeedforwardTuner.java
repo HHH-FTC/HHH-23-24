@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.Resources.RoadRunnerQuickstart.drive.opmode;
 
-import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.MAX_ACCEL;
-import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.MAX_VEL;
-import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.kA;
-import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.kStatic;
-import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.kV;
+import static org.firstinspires.ftc.teamcode.Hardware.Drivetrains.DriveConstants.MAX_ACCEL;
+import static org.firstinspires.ftc.teamcode.Hardware.Drivetrains.DriveConstants.MAX_VEL;
+import static org.firstinspires.ftc.teamcode.Hardware.Drivetrains.DriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.Hardware.Drivetrains.DriveConstants.kA;
+import static org.firstinspires.ftc.teamcode.Hardware.Drivetrains.DriveConstants.kStatic;
+import static org.firstinspires.ftc.teamcode.Hardware.Drivetrains.DriveConstants.kV;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;

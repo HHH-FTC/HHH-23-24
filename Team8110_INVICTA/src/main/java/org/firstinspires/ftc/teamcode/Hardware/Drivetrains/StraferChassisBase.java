@@ -1,12 +1,12 @@
-package org.firstinspires.ftc.teamcode.Hardware.Chassis;
-import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.MAX_ACCEL;
-import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.MAX_ANG_ACCEL;
-import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.MAX_ANG_VEL;
-import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.MAX_VEL;
-import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.MOTOR_VELO_PID;
-import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.RUN_USING_ENCODER;
-import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.TRACK_WIDTH;
-import static org.firstinspires.ftc.teamcode.Hardware.Chassis.DriveConstants.encoderTicksToInches;
+package org.firstinspires.ftc.teamcode.Hardware.Drivetrains;
+import static org.firstinspires.ftc.teamcode.Hardware.Drivetrains.DriveConstants.MAX_ACCEL;
+import static org.firstinspires.ftc.teamcode.Hardware.Drivetrains.DriveConstants.MAX_ANG_ACCEL;
+import static org.firstinspires.ftc.teamcode.Hardware.Drivetrains.DriveConstants.MAX_ANG_VEL;
+import static org.firstinspires.ftc.teamcode.Hardware.Drivetrains.DriveConstants.MAX_VEL;
+import static org.firstinspires.ftc.teamcode.Hardware.Drivetrains.DriveConstants.MOTOR_VELO_PID;
+import static org.firstinspires.ftc.teamcode.Hardware.Drivetrains.DriveConstants.RUN_USING_ENCODER;
+import static org.firstinspires.ftc.teamcode.Hardware.Drivetrains.DriveConstants.TRACK_WIDTH;
+import static org.firstinspires.ftc.teamcode.Hardware.Drivetrains.DriveConstants.encoderTicksToInches;
 import static org.firstinspires.ftc.teamcode.Resources.RoadRunnerQuickstart.drive.SampleMecanumDrive.HEADING_PID;
 import static org.firstinspires.ftc.teamcode.Resources.RoadRunnerQuickstart.drive.SampleMecanumDrive.TRANSLATIONAL_PID;
 
