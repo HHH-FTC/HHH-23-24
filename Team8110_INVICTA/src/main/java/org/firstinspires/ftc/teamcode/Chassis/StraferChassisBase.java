@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.drive.DriveSignal;
+import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.acmerobotics.roadrunner.followers.HolonomicPIDVAFollower;
 import com.acmerobotics.roadrunner.followers.TrajectoryFollower;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -45,7 +46,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Config
-public class StraferChassisBase extends SampleMecanumDrive {
+public class StraferChassisBase extends MecanumDrive {
     //Declare the variables for the mecanum drive train class
     /* Although the encoders aren't DcMotors, they can be initialized as one
     since they are connected to the drive train motor encoder ports on the rev hub.
@@ -78,7 +79,7 @@ public class StraferChassisBase extends SampleMecanumDrive {
 
     public StraferChassisBase(HardwareMap hardwareMap) {
 
-        super(hardwareMap);
+        super(DriveConstants.kV, DriveConstants.kA, DriveConstants.kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
 
 //        follower = new HolonomicPIDVAFollower(TRANSLATIONAL_PID, TRANSLATIONAL_PID, HEADING_PID,
                 new Pose2d(0.5, 0.5, Math.toRadians(5.0));
@@ -123,7 +124,7 @@ public class StraferChassisBase extends SampleMecanumDrive {
 
     public StraferChassisBase(String flName, String frName, String brName, String blName, HardwareMap hardwareMap) {
 
-        super(hardwareMap);
+        super(DriveConstants.kV, DriveConstants.kA, DriveConstants.kStatic, TRACK_WIDTH, TRACK_WIDTH, LATERAL_MULTIPLIER);
 
 
         //InertialMeasurementUnit = new InertialMeasurementUnit(hardwareMap);
@@ -402,5 +403,10 @@ public class StraferChassisBase extends SampleMecanumDrive {
         wheels.add(backLeft);
         wheels.add(backRight);
         return wheels;
+    }
+
+    @Override
+    protected double getRawExternalHeading() {
+        return this.getExternalHeading();
     }
 }
