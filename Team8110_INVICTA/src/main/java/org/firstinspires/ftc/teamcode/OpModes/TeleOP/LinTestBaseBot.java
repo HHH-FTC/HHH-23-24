@@ -17,7 +17,7 @@ public class LinTestBaseBot extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            telemetry.addData("Positions:", base.teleOpDrive());
+            telemetry.addData("Positions:", base.teleOpDrive(gamepad1));
             telemetry.update();
         }
     }
