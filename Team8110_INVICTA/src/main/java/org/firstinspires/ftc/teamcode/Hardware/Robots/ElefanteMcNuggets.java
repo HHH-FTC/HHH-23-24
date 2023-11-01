@@ -1,40 +1,43 @@
 package org.firstinspires.ftc.teamcode.Hardware.Robots;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.Hardware.Drivetrains.StraferChassisBase;
 import org.firstinspires.ftc.teamcode.Hardware.Mechanisms.Claw;
 import org.firstinspires.ftc.teamcode.Hardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.Hardware.Mechanisms.Motor;
 import org.firstinspires.ftc.teamcode.Hardware.Mechanisms.Webcam;
 import org.openftc.easyopencv.OpenCvCamera;
 
+import java.util.Arrays;
 import java.util.List;
 
-public class ElefanteMcNuggets extends StraferChassisBase {
+public class ElefanteMcNuggets {
     final HardwareMap hwmap;
     final ScissorLift lift;
-
     final ConeClaw claw;
-
     final OpenCvCamera camera;
-
-    double diff = 0.5;
+    final Motor left;
+    final Motor right;
+    private final Motor fRight;
+    private final Motor fLeft;
+    List<Motor> wheels;
 
     public ElefanteMcNuggets(HardwareMap hardwareMap) {
-        super(hardwareMap);
         this.hwmap = hardwareMap;
         this.lift = new ScissorLift("lift");
         this.claw = new ConeClaw("claw");
         this.camera = new Webcam(hardwareMap).getCamera();
+        this.left = new Motor("backLeft", hardwareMap);
+        this.right = new Motor("backRight", hardwareMap);
+        this.fRight = new Motor("frontRight", hardwareMap);
+        this.fLeft = new Motor("frontLeft", hardwareMap);
 
-        this.backRight.setDirectionReverse();
-        this.frontRight.setDirectionReverse();
+        wheels = Arrays.asList(left, right);
 
-
+        this.fLeft.setDirectionReverse();
     }
 
     public ConeClaw claw() {
@@ -72,8 +75,6 @@ public class ElefanteMcNuggets extends StraferChassisBase {
 //            telemetry.addData("started running to position", 0);
 //            telemetry.update();
             liftMotor.runToPosition(position);
-//            telemetry.addData("ran to position", 0);
-//            telemetry.update();
         }
 
         public Motor getMotor() {
@@ -161,38 +162,44 @@ public class ElefanteMcNuggets extends StraferChassisBase {
         ));
     }
 */
-    public void teleOpDrive(Gamepad gamepad) {
-        setDrivePower(gamepad.left_stick_y, gamepad.left_stick_x, gamepad.right_stick_x);
-    }
+    public double teleOpDrive(Gamepad gamepad) {
+        double drive = -gamepad.left_stick_y;
+        double turn = gamepad.right_stick_x;
 
-    public void setDrivePower(double drive, double strafe, double turn) {
+        left.setPower(drive);
+        fLeft.setPower(drive);
+        right.setPower(drive);
+        fRight.setPower(drive);
 
-        double fLeft = 0.875 * drive - 1 * strafe - 0.8 * turn;
-        double fRight = 0.875 * drive + 1 * strafe + 0.8 * turn;
-        double bRight = -0.875 * drive - 1 * strafe + 0.8 * turn;
-        double bLeft = -0.875 * drive + 1 * strafe - 0.8 * turn;
+        if(drive>0) {
+            left.setPower(0);
+            fLeft.setPower(0);
+            right.setPower(.5);
+            fRight.setPower(.4);
+        }
+        else if(drive<0) {
+            left.setPower(-.5);
+            fLeft.setPower(-.7);
+            right.setPower(0);
+            fRight.setPower(0);
+        }
 
-//        switch (speed) {
-//            case FASTER:
-//                if (gamepad.x) {
-//                    diff = 0.5;
-//                    speed = SLOW;
-//                }
-//                break;
-//            case SLOW:
-//                if (gamepad.x) {
-//                    diff = 1.5;
-//                    speed = DriveSpeeds.FASTER;
-//                }
-//                break;
-//        }
+        if(turn>0) {
+            left.setPower(-1);
+            fLeft.setPower(-1);
+            right.setPower(1);
+            fRight.setPower(1);
+        }
+        else if(turn<0) {
+            left.setPower(.7);
+            fLeft.setPower(.7);
+            right.setPower(.7);
+            fRight.setPower(-.7);
+        }
 
-        this.setPower(fLeft, fRight, bRight, -bLeft);
-    }
 
-    @Override
-    public void setDrivePower(Pose2d pose) {
-        this.setDrivePower(point65(pose.getX()), point65(pose.getY()), point65(pose.getHeading()));
+
+        return turn;
     }
 
     private static double point65(double x) {
@@ -211,11 +218,10 @@ public class ElefanteMcNuggets extends StraferChassisBase {
         double down = (gamepad.left_bumper || gamepad.dpad_down) ? 0.75 : 0;
         double up = (gamepad.right_bumper || gamepad.dpad_up) ? 0.75 : 0;
 
-        lift.power(up-down);
+        lift.power(down-up);
     }
 
     public void runToPosition(int position, double power) {
-        List<Motor> wheels = this.getWheels();
 
         for (Motor motor : wheels) {
             motor.runToPosition(position,power);
@@ -230,32 +236,5 @@ public class ElefanteMcNuggets extends StraferChassisBase {
         this.runToPosition(position*538,1);
     }
 
-    public void strafeRight(int position){
-        this.frontLeft.runToPosition(position*538,1);
-        this.backLeft.runToPosition(position*5378,1);
-        this.frontRight.runToPosition(position*538,1);
-        this.backRight.runToPosition(position*538,1);
-    }
-
-    public void strafeLeft(int position){
-        this.frontLeft.runToPosition(position*538,-1);
-        this.backLeft.runToPosition(position*538,1);
-        this.frontRight.runToPosition(position*538,1);
-        this.backRight.runToPosition(position*538,1);
-   }
-
-    public void rotate180(int position){
-        this.frontLeft.runToPosition(position*538,1);
-        this.frontRight.runToPosition(position*538,-1);
-        this.backRight.runToPosition(position*538,0);
-        this.backLeft.runToPosition(position*538,0);
-    }
-
-    public void runForward(int pos){
-        this.frontLeft.runToPosition(pos*538,1);
-        this.frontRight.runToPosition(pos*538,1);
-        this.backRight.runToPosition(pos*538,1);
-        this.backLeft.runToPosition(pos*538,1);
-    }
 
 }

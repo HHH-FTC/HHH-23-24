@@ -22,7 +22,6 @@ public class ElefanteTeleOp extends LinearOpMode {
             telemetry.addData("Lift Position", robot.lift().getPosition());
             telemetry.addData("Lift Height", robot.lift().getInches());
             telemetry.addData("Claw Position", robot.claw().getPosition());
-            telemetry.addData("Motor Positions", robot.getWheelPositions());
             telemetry.update();
 
             robot.teleOpLift(gamepad1);
