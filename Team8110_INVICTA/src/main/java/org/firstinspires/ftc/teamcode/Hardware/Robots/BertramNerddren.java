@@ -22,7 +22,7 @@ public class BertramNerddren extends StraferChassisBase {
         return loc;
     }
 
-    public void goCm(int cm) {
+    public void goCm(double cm) {
         Trajectory go = this.trajectoryBuilder(this.getPoseEstimate()).forward(cm).build();
         this.followTrajectory(go);
     }

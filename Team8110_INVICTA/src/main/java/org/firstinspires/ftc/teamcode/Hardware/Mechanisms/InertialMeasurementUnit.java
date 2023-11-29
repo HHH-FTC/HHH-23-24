@@ -15,7 +15,7 @@ public class InertialMeasurementUnit {
     public Orientation straight;
     public double globalAngle;
 
-    public InertialMeasurementUnit(HardwareMap hardwareMap){
+    public InertialMeasurementUnit(AxesOrder xyz, HardwareMap hardwareMap){
         imu = hardwareMap.get(BNO055IMU.class, "imu");
 
         // IMU Setup

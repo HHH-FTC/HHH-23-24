@@ -152,4 +152,9 @@ public class Motor { //implements Mechanism {
     public DcMotorSimple.Direction getDirection() {
         return dcMotorEx.getDirection();
     }
+
+    public double getCurrPosTicks(){
+        return dcMotorEx.getCurrentPosition();
+    }
+
 }
