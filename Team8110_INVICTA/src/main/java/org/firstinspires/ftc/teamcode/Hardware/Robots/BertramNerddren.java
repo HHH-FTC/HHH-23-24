@@ -9,11 +9,9 @@ import org.firstinspires.ftc.teamcode.Hardware.Drivetrains.StraferChassisBase;
 import org.firstinspires.ftc.teamcode.Hardware.Mechanisms.Motor;
 
 public class BertramNerddren extends StraferChassisBase {
-    Motor arm;
 
     public BertramNerddren(HardwareMap hardwareMap) {
         super(hardwareMap);
-        arm = new Motor("arm", hardwareMap);
     }
 
     public Pose2d teleOpDrive(Gamepad gamepad) {
@@ -25,15 +23,5 @@ public class BertramNerddren extends StraferChassisBase {
     public void goCm(double cm) {
         Trajectory go = this.trajectoryBuilder(this.getPoseEstimate()).forward(cm).build();
         this.followTrajectory(go);
-    }
-
-    public void teleOpArm(Gamepad gp) {
-        if (!gp.dpad_up && !gp.dpad_down) {
-            arm.setPower(0.1);
-        } else if (gp.dpad_up) {
-            arm.setPower(1);
-        } else if (gp.dpad_down) {
-            arm.setPower(-1);
-        }
     }
 }
