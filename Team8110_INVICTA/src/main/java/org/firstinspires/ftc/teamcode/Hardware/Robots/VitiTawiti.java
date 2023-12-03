@@ -9,17 +9,25 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.Hardware.Drivetrains.StraferChassisBase;
 import org.firstinspires.ftc.teamcode.Hardware.Mechanisms.Motor;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
 
 public class VitiTawiti extends StraferChassisBase {
-    public Motor slides;
-    Motor intake;
+    final public Motor slides;
+    final Motor intake;
     boolean oldX, oldA;
-    VitiClaw claw;
-    public List<LynxModule> lynx;
+    final VitiClaw claw;
+    final public List<LynxModule> lynx;
+
+    final public VisionPortal camera;
+    final public TfodProcessor tf;
+    final public AprilTagProcessor atag;
 
     public VitiTawiti(HardwareMap hwMap) {
         super(hwMap);
@@ -30,6 +38,9 @@ public class VitiTawiti extends StraferChassisBase {
         intake.setDirectionReverse();
         lynx = hwMap.getAll(LynxModule.class);
         claw = new VitiClaw(hwMap, 0, .75);
+        tf = TfodProcessor.easyCreateWithDefaults();
+        atag = AprilTagProcessor.easyCreateWithDefaults();
+        camera = VisionPortal.easyCreateWithDefaults(hwMap.get(WebcamName.class, "Webcam 1"), tf, atag);
     }
 
     public class VitiClaw {
@@ -88,4 +99,5 @@ public class VitiTawiti extends StraferChassisBase {
             oldA = !oldA;
         }
     }
+
 }
