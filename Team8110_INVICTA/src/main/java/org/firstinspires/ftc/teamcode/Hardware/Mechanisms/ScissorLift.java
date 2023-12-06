@@ -1,6 +1,6 @@
 package org.firstinspires.ftc.teamcode.Hardware.Mechanisms;
 
-public interface Lift  {
+public interface ScissorLift {
 
 
     /**

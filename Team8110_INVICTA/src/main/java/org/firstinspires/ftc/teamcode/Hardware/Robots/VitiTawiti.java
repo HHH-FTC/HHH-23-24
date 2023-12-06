@@ -19,10 +19,10 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.List;
 
 public class VitiTawiti extends StraferChassisBase {
-    final public Motor slides;
-    final Motor intake;
-    boolean oldX, oldA;
-    final VitiClaw claw;
+    final public Motor intake, outtake;
+    final public LinearSlide slides;
+    public final VitiClaw claw;
+    public final VitiClaw push;
     final public List<LynxModule> lynx;
 
     final public VisionPortal camera;
@@ -31,19 +31,29 @@ public class VitiTawiti extends StraferChassisBase {
 
     public VitiTawiti(HardwareMap hwMap) {
         super(hwMap);
-        slides = new Motor("slides", hwMap);
-        slides.setDirectionReverse();
-        slides.setZeroPowerBehavior(BRAKE);
+
+        Motor slideM = new Motor("slides", hwMap);
+        slideM.setDirectionReverse();
+        slideM.setZeroPowerBehavior(BRAKE);
+        slides = new LinearSlide(slideM, 0, 500, 250);
+
+        outtake = new Motor("outtake", hwMap);
+        outtake.setDirectionReverse();
+
         intake = new Motor("intake", hwMap);
         intake.setDirectionReverse();
+
         lynx = hwMap.getAll(LynxModule.class);
+
         claw = new VitiClaw(hwMap, 0, .75);
+        push = new VitiClaw(hwMap, 0, .75);
+
         tf = TfodProcessor.easyCreateWithDefaults();
         atag = AprilTagProcessor.easyCreateWithDefaults();
         camera = VisionPortal.easyCreateWithDefaults(hwMap.get(WebcamName.class, "Webcam 1"), tf, atag);
     }
 
-    public class VitiClaw {
+    public static class VitiClaw {
         Servo claw;
         double pos1, pos2;
 
@@ -60,6 +70,44 @@ public class VitiTawiti extends StraferChassisBase {
         public void runTo2() {
             claw.setPosition(pos2);
         }
+
+        public double getPosition() {
+            return claw.getPosition();
+        }
+    }
+
+    public static class LinearSlide {
+        public final Motor motor;
+        public double zero, target, increment;
+        public int advance;
+
+        public LinearSlide(Motor motor, double zero, double target, double increment) {
+            this.motor = motor;
+            this.zero = zero;
+            this.target = target;
+            this.increment = increment;
+            this.advance = 0;
+        }
+
+        public void goToZero() {
+            motor.runToPosition(zero);
+        }
+
+        public void goToOne() {
+            motor.runToPosition(target + (increment * advance));
+        }
+
+        public void advance() {
+            this.advance += 1;
+        }
+
+        public double getTarget() {
+            return target + (increment * advance);
+        }
+
+        public void unadvance() {
+            this.advance -= 1;
+        }
     }
 
     public Pose2d teleOpDrive(Gamepad gamepad) {
@@ -68,35 +116,11 @@ public class VitiTawiti extends StraferChassisBase {
         return loc;
     }
 
-    public void goCm(int cm) {
-        Trajectory go = this.trajectoryBuilder(this.getPoseEstimate()).forward(cm).build();
-        this.followTrajectory(go);
-    }
-
-    public void teleOpSlides(Gamepad gp) {
-        if (!gp.dpad_up && !gp.dpad_down) {
-            slides.setPower(0);
-        } else if (gp.dpad_up) {
-            slides.setPower(1);
-        } else if (gp.dpad_down) {
-            slides.setPower(-1);
-        }
-    }
-
-    public void teleOpClaw(Gamepad gp) {
-        if (gp.x) {
-            claw.runTo2();
-        } else if (gp.y) {
-            claw.runTo1();
-        }
-    }
     public void teleOpIntake(Gamepad gp) {
-        if (gp.a && !oldA) {
+        if (gp.a) {
             intake.setPower(0.5);
-            oldA = !oldA;
-        } else if (!gp.a && oldA) {
+        } else if (gp.b) {
             intake.setPower(0);
-            oldA = !oldA;
         }
     }
 
