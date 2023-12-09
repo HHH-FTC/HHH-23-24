@@ -52,7 +52,7 @@ public class fiveRight extends LinearOpMode {
         frPose = 0;
 
         waitForStart();
-        strafeRight(1000,0.25);
+        strafeRight(1000,0.85);
     }
 
     public void strafeRight(int d, double speed){
