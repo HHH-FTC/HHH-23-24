@@ -31,5 +31,5 @@ dependencies {
     //implementation 'com.acmerobotics.roadrunner:core:1.0.0-beta3'
     //implementation 'com.acmerobotics.roadrunner:actions:1.0.0-beta3'
     implementation 'com.acmerobotics.roadrunner:core:0.5.5'
-
+    implementation 'com.github.RR-9527:robot-code-v2:1.0.0.'
 }

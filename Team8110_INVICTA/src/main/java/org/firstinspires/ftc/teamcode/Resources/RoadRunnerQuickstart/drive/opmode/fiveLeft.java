@@ -1,5 +1,4 @@
-package org.firstinspires.ftc.teamcode.OpModes.Auton;
-
+package org.firstinspires.ftc.teamcode.Resources.RoadRunnerQuickstart.drive.opmode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -12,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Hardware.Drivetrains.StraferChassisBase;
 
 @Autonomous
-public class Straight extends LinearOpMode {
+public class fiveLeft extends LinearOpMode {
 
     StraferChassisBase base;
     HardwareMap hwm;
@@ -30,6 +29,8 @@ public class Straight extends LinearOpMode {
     public int brPose;
     public BNO055IMU imu;
 
+    StrafingLeft left;
+
     ElapsedTime timer = new ElapsedTime();
 
 
@@ -45,78 +46,36 @@ public class Straight extends LinearOpMode {
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         flPose = 0;
         frPose = 0;
 
         waitForStart();
-        //toStriaght(1000,1000,0.25);
-        move(1000,1000,0.25);
+        strafeLeft(1000,0.25);
     }
 
-    public void move(int fl, int fr, double speed){
-        flPose += fl;
-        frPose += fr;
-
-        frontLeft.setTargetPosition(flPose);
-        frontRight.setTargetPosition(frPose);
-
-        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        frontLeft.setPower(speed);
-        frontRight.setPower(speed);
-
-        //boolean b = frontLeft.isBusy() && frontRight.isBusy();
-
-        while(opModeIsActive()){
-            idle();
-        }
-    }
-
-    public void toTurn(int f, double speed){
-        flPose += f;
-        frPose += -f;
-        blPose += f;
-        brPose += -f;
+    public void strafeLeft(int d, double speed){
+        flPose -= d;
+        frPose += d;
+        blPose += d;
+        brPose -= d;
 
         frontLeft.setTargetPosition(flPose);
         frontRight.setTargetPosition(frPose);
         backLeft.setTargetPosition(blPose);
         backRight.setTargetPosition(brPose);
 
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         frontLeft.setPower(speed);
         frontRight.setPower(speed);
         backLeft.setPower(speed);
         backRight.setPower(speed);
-
-        //boolean b = frontLeft.isBusy() && frontRight.isBusy();
-
-        while(opModeIsActive()){
-            idle();
-        }
     }
 
-
-    //front Left and backRight move sytrighjt
-
-    public void toStriaght(int fl, int br, double speed){
-        flPose += fl;
-        brPose += br;
-
-        frontLeft.setTargetPosition(flPose);
-        backRight.setTargetPosition(brPose);
-
-        frontLeft.setPower(speed);
-        backRight.setPower(speed);
-
-        //boolean b = frontLeft.isBusy() && frontRight.isBusy();
-
-        while(opModeIsActive()){
-            idle();
-        }
-    }
 }

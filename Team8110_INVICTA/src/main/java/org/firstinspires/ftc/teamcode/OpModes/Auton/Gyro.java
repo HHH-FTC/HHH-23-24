@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.OpModes.Auton;
 
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -19,6 +20,7 @@ public class Gyro extends LinearOpMode {
     private ElapsedTime time = new ElapsedTime();
 
     private Orientation lastAngles = new Orientation();
+    private BNO055IMU imu;
     private double currAngle = 0.0;
     @Override
     public void runOpMode() throws InterruptedException {
