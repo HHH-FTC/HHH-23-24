@@ -19,10 +19,10 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.List;
 
 public class VitiTawiti extends StraferChassisBase {
-    final public Motor slides;
+    final public Motor slides, outtake, hang;
     final Motor intake;
     boolean oldX, oldA;
-    final VitiClaw claw;
+    public final VitiClaw claw;
     final public List<LynxModule> lynx;
 
     final public VisionPortal camera;
@@ -36,6 +36,10 @@ public class VitiTawiti extends StraferChassisBase {
         slides.setZeroPowerBehavior(BRAKE);
         intake = new Motor("intake", hwMap);
         intake.setDirectionReverse();
+        outtake = new Motor("outtake", hwMap);
+        outtake.setDirectionReverse();
+        hang = new Motor("hang", hwMap);
+        hang.setDirectionReverse();
         lynx = hwMap.getAll(LynxModule.class);
         claw = new VitiClaw(hwMap, 0, .75);
         tf = TfodProcessor.easyCreateWithDefaults();
@@ -59,6 +63,10 @@ public class VitiTawiti extends StraferChassisBase {
 
         public void runTo2() {
             claw.setPosition(pos2);
+        }
+
+        public double getPosition() {
+            return claw.getPosition();
         }
     }
 
@@ -91,12 +99,10 @@ public class VitiTawiti extends StraferChassisBase {
         }
     }
     public void teleOpIntake(Gamepad gp) {
-        if (gp.a && !oldA) {
+        if (gp.a) {
             intake.setPower(0.5);
-            oldA = !oldA;
-        } else if (!gp.a && oldA) {
+        } else if (gp.b) {
             intake.setPower(0);
-            oldA = !oldA;
         }
     }
 
