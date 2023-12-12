@@ -1,5 +1,4 @@
-package org.firstinspires.ftc.teamcode.OpModes.Auton;
-
+package org.firstinspires.ftc.teamcode.Resources.RoadRunnerQuickstart.drive.opmode;
 
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -30,6 +29,8 @@ public class Straight extends LinearOpMode {
     public int brPose;
     public BNO055IMU imu;
 
+    StrafingLeft left;
+
     ElapsedTime timer = new ElapsedTime();
 
 
@@ -45,20 +46,23 @@ public class Straight extends LinearOpMode {
         backRight = hardwareMap.get(DcMotor.class, "backRight");
         backRight.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        backRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        backLeft.setDirection(DcMotorSimple.Direction.REVERSE);
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         flPose = 0;
         frPose = 0;
 
         waitForStart();
-        //toStriaght(1000,1000,0.25);
-        move(1000,1000,0.25);
+        telemetry.addData("hi",frontLeft);
+        //move(1000,1000,0.25);
+        //left.strafeLeft(1000,1000,0.7);
+        //straight(1000,0.65);
+
     }
 
     public void move(int fl, int fr, double speed){
         flPose += fl;
-        frPose += fr;
+        frPose -= fr;
 
         frontLeft.setTargetPosition(flPose);
         frontRight.setTargetPosition(frPose);
@@ -76,7 +80,7 @@ public class Straight extends LinearOpMode {
         }
     }
 
-    public void toTurn(int f, double speed){
+    public void straight(int f, double speed){
         flPose += f;
         frPose += -f;
         blPose += f;
@@ -87,30 +91,14 @@ public class Straight extends LinearOpMode {
         backLeft.setTargetPosition(blPose);
         backRight.setTargetPosition(brPose);
 
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         frontLeft.setPower(speed);
         frontRight.setPower(speed);
         backLeft.setPower(speed);
-        backRight.setPower(speed);
-
-        //boolean b = frontLeft.isBusy() && frontRight.isBusy();
-
-        while(opModeIsActive()){
-            idle();
-        }
-    }
-
-
-    //front Left and backRight move sytrighjt
-
-    public void toStriaght(int fl, int br, double speed){
-        flPose += fl;
-        brPose += br;
-
-        frontLeft.setTargetPosition(flPose);
-        backRight.setTargetPosition(brPose);
-
-        frontLeft.setPower(speed);
         backRight.setPower(speed);
 
         //boolean b = frontLeft.isBusy() && frontRight.isBusy();
