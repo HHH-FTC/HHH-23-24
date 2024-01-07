@@ -19,10 +19,10 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.List;
 
 public class VitiTawiti extends StraferChassisBase {
-    final public Motor intake, outtake;
-    final public LinearSlide slides;
+    final public Motor slides, outtake, hang;
+    final Motor intake;
+    boolean oldX, oldA;
     public final VitiClaw claw;
-    public final VitiClaw push;
     final public List<LynxModule> lynx;
 
     final public VisionPortal camera;
@@ -31,29 +31,23 @@ public class VitiTawiti extends StraferChassisBase {
 
     public VitiTawiti(HardwareMap hwMap) {
         super(hwMap);
-
-        Motor slideM = new Motor("slides", hwMap);
-        slideM.setDirectionReverse();
-        slideM.setZeroPowerBehavior(BRAKE);
-        slides = new LinearSlide(slideM, 0, 500, 250);
-
-        outtake = new Motor("outtake", hwMap);
-        outtake.setDirectionReverse();
-
+        slides = new Motor("slides", hwMap);
+        slides.setDirectionReverse();
+        slides.setZeroPowerBehavior(BRAKE);
         intake = new Motor("intake", hwMap);
         intake.setDirectionReverse();
-
+        outtake = new Motor("outtake", hwMap);
+        outtake.setDirectionReverse();
+        hang = new Motor("hang", hwMap);
+        hang.setDirectionReverse();
         lynx = hwMap.getAll(LynxModule.class);
-
         claw = new VitiClaw(hwMap, 0, .75);
-        push = new VitiClaw(hwMap, 0, .75);
-
         tf = TfodProcessor.easyCreateWithDefaults();
         atag = AprilTagProcessor.easyCreateWithDefaults();
         camera = VisionPortal.easyCreateWithDefaults(hwMap.get(WebcamName.class, "Webcam 1"), tf, atag);
     }
 
-    public static class VitiClaw {
+    public class VitiClaw {
         Servo claw;
         double pos1, pos2;
 
@@ -76,46 +70,34 @@ public class VitiTawiti extends StraferChassisBase {
         }
     }
 
-    public static class LinearSlide {
-        public final Motor motor;
-        public double zero, target, increment;
-        public int advance;
-
-        public LinearSlide(Motor motor, double zero, double target, double increment) {
-            this.motor = motor;
-            this.zero = zero;
-            this.target = target;
-            this.increment = increment;
-            this.advance = 0;
-        }
-
-        public void goToZero() {
-            motor.runToPosition(zero);
-        }
-
-        public void goToOne() {
-            motor.runToPosition(target + (increment * advance));
-        }
-
-        public void advance() {
-            this.advance += 1;
-        }
-
-        public double getTarget() {
-            return target + (increment * advance);
-        }
-
-        public void unadvance() {
-            this.advance -= 1;
-        }
-    }
-
     public Pose2d teleOpDrive(Gamepad gamepad) {
         Pose2d loc = new Pose2d(-gamepad.left_stick_y, -gamepad.right_stick_x, -gamepad.left_stick_x);
         this.setDrivePower(loc);
         return loc;
     }
 
+    public void goCm(int cm) {
+        Trajectory go = this.trajectoryBuilder(this.getPoseEstimate()).forward(cm).build();
+        this.followTrajectory(go);
+    }
+
+    public void teleOpSlides(Gamepad gp) {
+        if (!gp.dpad_up && !gp.dpad_down) {
+            slides.setPower(0);
+        } else if (gp.dpad_up) {
+            slides.setPower(1);
+        } else if (gp.dpad_down) {
+            slides.setPower(-1);
+        }
+    }
+
+    public void teleOpClaw(Gamepad gp) {
+        if (gp.x) {
+            claw.runTo2();
+        } else if (gp.y) {
+            claw.runTo1();
+        }
+    }
     public void teleOpIntake(Gamepad gp) {
         if (gp.a) {
             intake.setPower(0.5);
