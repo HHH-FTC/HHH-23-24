@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Hardware.Drivetrains.StraferChassisBase;
 
-@Autonomous
+@Autonomous(name="Divya FiveRight")
 public class fiveRight extends LinearOpMode {
     StraferChassisBase base;
     HardwareMap hwm;

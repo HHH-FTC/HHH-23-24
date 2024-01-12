@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Hardware.Drivetrains.StraferChassisBase;
 
-@Autonomous
+@Autonomous(name="PID Straight")
 public class Straight extends LinearOpMode {
 
     StraferChassisBase base;

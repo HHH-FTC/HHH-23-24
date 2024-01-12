@@ -3,11 +3,10 @@ package org.firstinspires.ftc.teamcode.Hardware.Robots;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Hardware.Mechanisms.Claw;
-import org.firstinspires.ftc.teamcode.Hardware.Mechanisms.Lift;
 import org.firstinspires.ftc.teamcode.Hardware.Mechanisms.Motor;
+import org.firstinspires.ftc.teamcode.Hardware.Mechanisms.ScissorLift;
 import org.firstinspires.ftc.teamcode.Hardware.Mechanisms.Webcam;
 import org.openftc.easyopencv.OpenCvCamera;
 
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class ElefanteMcNuggets {
     final HardwareMap hwmap;
-    final ScissorLift lift;
+    final ElefanteLift lift;
     final ConeClaw claw;
     final OpenCvCamera camera;
     final Motor left;
@@ -27,7 +26,7 @@ public class ElefanteMcNuggets {
 
     public ElefanteMcNuggets(HardwareMap hardwareMap) {
         this.hwmap = hardwareMap;
-        this.lift = new ScissorLift("lift");
+        this.lift = new ElefanteLift("lift");
         this.claw = new ConeClaw("claw");
         this.camera = new Webcam(hardwareMap).getCamera();
         this.left = new Motor("backLeft", hardwareMap);
@@ -44,11 +43,11 @@ public class ElefanteMcNuggets {
         return claw;
     }
 
-    public class ScissorLift implements Lift {
+    public class ElefanteLift implements ScissorLift {
         private final Motor liftMotor;
         private final double initial;
 
-        public ScissorLift(String name) {
+        public ElefanteLift(String name) {
             liftMotor = new Motor(name, hwmap);
             liftMotor.reset();
             initial = liftMotor.getPosition();
@@ -131,7 +130,7 @@ public class ElefanteMcNuggets {
         }
     }
 
-    public ScissorLift getLift() {
+    public ElefanteLift getLift() {
         return lift;
     }
 
@@ -228,7 +227,7 @@ public class ElefanteMcNuggets {
         }
     }
 
-    public ScissorLift lift() {
+    public ElefanteLift lift() {
         return lift;
     }
 
